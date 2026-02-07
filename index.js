@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./config/swagger.js";
 import authRouter from "./routes/auth.routes.js";
+import courseRouter from "./routes/cources.routes.js";
 dotenv.config();
 
 const app = express();
@@ -32,6 +33,7 @@ app.get("/", (req, res) => {
 });
 
 app.use('/api/auth',authRouter)
+app.use('/api/courses',courseRouter)
 
 
 /* ================= Swagger ================= */

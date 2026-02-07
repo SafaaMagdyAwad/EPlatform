@@ -13,7 +13,13 @@ const generateToken = (id, role) => {
         { expiresIn: "7d" }
     );
 };
-
+const generateRefreshToken = (id, role) => {
+  return jwt.sign(
+    { id, role },
+    process.env.REFRESH_SECRET,
+    { expiresIn: "7d" }
+  );
+};
 /**
  * @desc    Register new User
  * @route   POST /api/auth/register
@@ -75,30 +81,39 @@ export const register = async (req, res) => {
  */
 export const login = async (req, res) => {
   try {
+    console.log("JWT_SECRET:", process.env.JWT_SECRET);
+console.log("REFRESH_SECRET:", process.env.REFRESH_SECRET);
+
     const { email, password } = req.body;
 
-    if (!email || !password) {
+    // التحقق من البيانات
+    if (!email || !password)
       return res.status(400).json({ message: "Email and password are required" });
-    }
 
     const user = await UserModel.findOne({ email }).select("+password");
-
-    if (!user) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
+    if (!user) return res.status(401).json({ message: "Invalid email or password" });
 
     const isMatch = await user.comparePassword(password);
-
-    if (!isMatch) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
+    if (!isMatch) return res.status(401).json({ message: "Invalid email or password" });
 
     const userSafe = user.toObject();
     delete userSafe.password;
 
+    // توليد التوكنات
+    const accessToken = generateToken(user._id, user.role);
+    const refreshToken = generateRefreshToken(user._id, user.role);
+
+    // تخزين refresh token في HttpOnly cookie
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 أيام
+    });
+
     res.status(200).json({
       message: "Login successful",
-      token: generateToken(user._id, user.role),
+      token: accessToken,
       user: userSafe
     });
 
@@ -210,33 +225,69 @@ export const resetPassword = async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 };
+/**
+ * @desc    Refresh
+ * @route   POST /api/auth/refresh
+ * @access  Public
+ */
+export const refresh = async (req, res) => {
+  try {
+    const refreshToken = req.cookies?.refreshToken;
+    if (!refreshToken) return res.status(401).json({ message: "No refresh token" });
 
-// export const googleLogin = async (req, res) => {
-//     try {
-//         const { email, name, googleId } = req.body;
-//         // البحث عن المستخدم أو إنشاء واحد جديد إذا لم يكن موجود
-//         const user = await UserModel.findOneAndUpdate(
-//             { $or: [{ googleId: googleId }, { email: email }] },
-//             {
-//                 $set: {
-//                     name: name,
-//                     email: email,
-//                     googleId: googleId,
-//                     lastLogin: new Date()
-//                 }
-//             },
-//             { upsert: true, new: true }
-//         );
+    // تحقق من صحة الـ token
+    const decoded = jwt.verify(refreshToken, process.env.REFRESH_SECRET);
 
-//         return res.status(200).json({
-//             success: true,
-//             data: user  // تم تعديل result إلى UserModel
-//         });
-//     } catch (error) {
-//         console.error("Controller Error:", error);
-//         return res.status(error.statusCode || 500).json({
-//             success: false,
-//             message: error.message || "حدث خطأ في السيرفر"
-//         });
-//     }
-// };
+    // اصنع access token جديد
+    const accessToken = generateToken(decoded.id, decoded.role);
+
+    res.status(200).json({
+      message: "Token refreshed",
+      token: accessToken
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(401).json({ message: "Invalid refresh token" });
+  }
+};
+
+/**
+ * @desc    Logout
+ * @route   POST /api/auth/logout
+ * @access  
+ */
+export const logout = async (req, res) => {
+  try {
+    // لو استخدمتي cookie
+    res.clearCookie("refreshToken", { httpOnly: true });
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+/**
+ * @desc    Reset password
+ * @route   POST /api/auth/me
+ * @access  
+ */
+export const me = async (req, res) => {
+  try {
+      const userId = req.user.id; // middleware auth يحط user على req
+      console.log(userId);
+      const user = await UserModel.findById(userId).select("-password");
+      console.log(user);
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.status(200).json({ user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+

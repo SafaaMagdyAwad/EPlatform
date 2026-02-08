@@ -268,26 +268,5 @@ export const logout = async (req, res) => {
   }
 };
 
-/**
- * @desc    Reset password
- * @route   POST /api/auth/me
- * @access  
- */
-export const me = async (req, res) => {
-  try {
-      const userId = req.user.id; // middleware auth يحط user على req
-      console.log(userId);
-      const user = await UserModel.findById(userId).select("-password");
-      console.log(user);
-
-    if (!user) return res.status(404).json({ message: "User not found" });
-
-    res.status(200).json({ user });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error" });
-  }
-};
-
 
 

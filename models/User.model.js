@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema(
             default: "student",
         },
         isActive: { type: Boolean, default: true },
+        avatar:{type:String , required:false},
         resetPasswordToken: String,
         resetPasswordExpire: Date,
     }, { timestamps: true });

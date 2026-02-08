@@ -30,6 +30,7 @@ const options = {
             email: { type: "string" },
             password: { type: "string" },
           },
+          
         },
         LoginDto: {
           type: "object",

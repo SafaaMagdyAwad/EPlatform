@@ -3,6 +3,9 @@ import CourseModel from "../models/Course.model.js";
 export const getAllCourses = async () => {
   return await CourseModel.find();
 };
+export const InstrctorCoursesService = async (instructorId) => {
+  return await CourseModel.find({instructorId});
+};
 
 export const getCourseById = async (id) => {
   return await CourseModel.findById(id);

@@ -13,6 +13,11 @@ const enrollmentSchema = new mongoose.Schema(
       required: true,
     },
     enrolledAt: { type: Date, default: Date.now },
+    progress: {
+      type: String,
+      enum: ["Beginner", "Intermediate", "Advanced"],
+      default: "Beginner"
+    },
   },
   { timestamps: true }
 );

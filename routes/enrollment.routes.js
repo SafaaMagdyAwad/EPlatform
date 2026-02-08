@@ -1,33 +1,97 @@
+import express from "express";
+import { enrollStudent, getMyProgress } from "../controllers/enrollment.controller.js";
+import authStudent from "../Middlewares/authStudent.js";
+const enrollmentRouter = express.Router();
+
 /**
  * @swagger
  * tags:
  *   name: Enrollment
+ *   description: Enrollment access
  */
 
 /**
  * @swagger
- * /api/courses/{id}/enroll:
+ * /api/enrollment/{courseId}/enroll:
  *   post:
  *     summary: Enroll in course
  *     tags: [Enrollment]
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: courseId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the course
  *     responses:
- *       200:
- *         description: Enrolled successfully
+ *       201:
+ *         description: Student enrolled successfully
+ *       409:
+ *         description: Student is already enrolled in this course
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Student is already enrolled in this course"
+ *       500:
+ *         description: Server error
  */
-app.post("/api/courses/:id/enroll", () => {});
 
 /**
  * @swagger
- * /api/progress/course/{id}:
+ * /api/enrollment/{courseId}/enroll:
  *   get:
  *     summary: Get course progress
- *     tags: [Progress]
+ *     tags: [Enrollment]
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: courseId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the course
  *     responses:
  *       200:
- *         description: Progress data
+ *         description: Your progress retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 percentage:
+ *                   type: number
+ *                   example: 75
+ *                 currentLevel:
+ *                   type: string
+ *                   example: "Intermediate"
+ *                 completedLessons:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   example: ["lessonId1","lessonId2"]
+ *       404:
+ *         description: Student is NOT enrolled in this course
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Student is not enrolled in this course"
+ *       500:
+ *         description: Server error
  */
-app.get("/api/progress/course/:id", () => {});
+
+enrollmentRouter.post("/:id/enroll", authStudent, enrollStudent);
+
+enrollmentRouter.get("/:id/enroll", authStudent, getMyProgress);
+
+export default enrollmentRouter;

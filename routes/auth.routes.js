@@ -1,6 +1,5 @@
 import express from "express";
-import { forgotPassword, login, logout, me, refresh, register, resetPassword } from "../controllers/auth.controller.js";
-import authMiddleware from "../Middlewares/authMiddleware.js";
+import { forgotPassword, login, logout, refresh, register, resetPassword } from "../controllers/auth.controller.js";
 
 
 const authRouter = express.Router();
@@ -264,58 +263,6 @@ const authRouter = express.Router();
  *                   example: "Server error"
  */
 
-/**
- * @swagger
- * /api/auth/me:
- *   get:
- *     summary: Get current logged-in user info
- *     tags: [Auth]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Current user data
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 user:
- *                   type: object
- *                   properties:
- *                     _id:
- *                       type: string
- *                       example: "64f8b2c8a1b2e8d9c0f5e2a1"
- *                     name:
- *                       type: string
- *                       example: "John Doe"
- *                     email:
- *                       type: string
- *                       example: "john.doe@example.com"
- *                     role:
- *                       type: string
- *                       example: "instructor"
- *       401:
- *         description: Unauthorized (missing or invalid token)
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "Not authorized"
- *       404:
- *         description: User not found
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "User not found"
- */
 
 authRouter.post("/register", register);
 authRouter.post("/login", login);
@@ -323,6 +270,5 @@ authRouter.post("/forgot-password", forgotPassword);
 authRouter.post("/reset-password/:token", resetPassword);
 authRouter.post("/refresh", refresh);
 authRouter.post("/logout", logout);
-authRouter.get("/me",authMiddleware, me);
 
 export default authRouter;

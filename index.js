@@ -8,6 +8,11 @@ import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./config/swagger.js";
 import authRouter from "./routes/auth.routes.js";
 import courseRouter from "./routes/cources.routes.js";
+import userRouter from "./routes/user.routes.js";
+import enrollmentRouter from "./routes/enrollment.routes.js";
+import sectionRouter from "./routes/section.routes.js";
+import lessonRouter from "./routes/lesson.routes.js";
+import liveSessionRouter from "./routes/liveSession.routes.js";
 dotenv.config();
 
 const app = express();
@@ -34,6 +39,11 @@ app.get("/", (req, res) => {
 
 app.use('/api/auth',authRouter)
 app.use('/api/courses',courseRouter)
+app.use('/api/users',userRouter)
+app.use('/api/enrollment',enrollmentRouter)
+app.use('/api/sections',sectionRouter)
+app.use('/api/lessons',lessonRouter)
+app.use('/api/live-sessions',liveSessionRouter)
 
 
 /* ================= Swagger ================= */

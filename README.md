@@ -249,66 +249,16 @@ With:
 
 ---
 
-# 🌐 API Routes – Online Learning Platform
 
-## 🔐 Auth & Users
 
-### Auth
-
-```
-POST   /api/auth/register
-POST   /api/auth/login
-POST   /api/auth/refresh
-POST   /api/auth/logout
-GET    /api/auth/me
-```
-
-### Users
-
-```
-GET    /api/users/me
-PATCH  /api/users/me
-```
-
----
-
-## 👨‍🏫 Instructor Routes
-
-### Instructor Profile
-
-```
-GET    /api/instructors/me
-PATCH  /api/instructors/me
-```
-
-### Courses (Instructor)
-
-```
-POST   /api/instructor/courses
-GET    /api/instructor/courses
-GET    /api/instructor/courses/:courseId
-PATCH  /api/instructor/courses/:courseId
-DELETE /api/instructor/courses/:courseId
-```
-
----
 
 ## 📚 Courses (Public / Student)
 
 ```
-GET    /api/courses
-GET    /api/courses/:courseId
+
 GET    /api/courses/:courseId/sections
 ```
 
-### Enrollment
-
-```
-POST   /api/courses/:courseId/enroll
-GET    /api/courses/:courseId/progress
-```
-
----
 
 ## 📦 Sections & Lessons
 

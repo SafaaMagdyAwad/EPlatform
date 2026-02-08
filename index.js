@@ -3,9 +3,9 @@ import cors from "cors";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import jwt from "jsonwebtoken";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./config/swagger.js";
+const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css";
 import authRouter from "./routes/auth.routes.js";
 import courseRouter from "./routes/cources.routes.js";
 import userRouter from "./routes/user.routes.js";
@@ -48,8 +48,17 @@ app.use('/api/live-sessions',liveSessionRouter)
 
 /* ================= Swagger ================= */
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, {
+    customCssUrl: CSS_URL,
+    customJs: [
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-standalone-preset.min.js',
+    ],
+  })
+);
 /* ================= Error Handling ================= */
 app.use((err, req, res, next) => {
   console.error(err);

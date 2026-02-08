@@ -1,7 +1,8 @@
 import UserModel from "../models/User.model.js";
 
 export const getMyProfile = async (userId) => {
-  const user = await UserModel.findById(userId).select("-password");
+  try{
+    const user = await UserModel.findById(userId).select("-password");
 
   if (!user) {
     const error = new Error("User not found");
@@ -10,6 +11,10 @@ export const getMyProfile = async (userId) => {
   }
 
   return user;
+  }catch (error) {
+   
+    throw error;
+  }
 };
 
 export const updateMyProfile = async (userId, updates) => {
@@ -60,7 +65,8 @@ export const deleteMyProfile = async (userId) => {
 
 
 export const changeMyPassword = async (userId, oldPassword, newPassword) => {
-  if (!oldPassword || !newPassword) {
+  try{
+    if (!oldPassword || !newPassword) {
     const error = new Error("Old password and new password are required");
     error.statusCode = 400;
     throw error;
@@ -88,4 +94,8 @@ export const changeMyPassword = async (userId, oldPassword, newPassword) => {
 
   user.password = newPassword;
   await user.save();
+  }catch (error) {
+   
+    throw error;
+  }
 };

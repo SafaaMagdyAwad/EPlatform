@@ -6,8 +6,8 @@ export const createLesson = async (data) => {
     const lesson = await LessonModel.create(data);
   return lesson;
   }catch (error) {
-   
-    throw error;
+    console.error(error);
+    res.status(500).json({ error: 'Server error', details: error.message });
   }
 };
 
@@ -16,8 +16,8 @@ export const getLessonsBySection = async (sectionId) => {
   try{
     return await LessonModel.find({ sectionId }).sort({ order: 1 });
   }catch (error) {
-   
-    throw error;
+    console.error(error);
+    res.status(500).json({ error: 'Server error', details: error.message });
   }
 };
 
@@ -26,8 +26,8 @@ export const getLessonById = async (id) => {
   try{
     return await LessonModel.findById(id);
   }catch (error) {
-   
-    throw error;
+    console.error(error);
+    res.status(500).json({ error: 'Server error', details: error.message });
   }
 };
 
@@ -40,8 +40,8 @@ export const updateLesson = async (id, updates) => {
   });
   return lesson;
   }catch (error) {
-   
-    throw error;
+    console.error(error);
+    res.status(500).json({ error: 'Server error', details: error.message });
   }
 };
 
@@ -51,7 +51,7 @@ export const deleteLesson = async (id) => {
 await LessonModel.findByIdAndDelete(id);
   return true;
   }catch (error) {
-   
-    throw error;
+    console.error(error);
+    res.status(500).json({ error: 'Server error', details: error.message });
   }
 };

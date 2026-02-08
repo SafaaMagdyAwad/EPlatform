@@ -16,9 +16,9 @@ export const createEnroll = async (studentId, courseId) => {
     });
 
     return enroll;
-  } catch (e) {
-    console.error("Error in enroll:", e);
-    throw new Error("Failed to enroll");
+  }catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error', details: error.message });
   }
 };
 export const getMyProgressService = async (studentId, courseId) => {
@@ -31,8 +31,8 @@ export const getMyProgressService = async (studentId, courseId) => {
     }
     console.log(enroll, "enroll");
     return enroll;
-  } catch (e) {
-    console.error("Error in enroll:", e);
-    throw new Error("Failed to enroll");
+  }catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error', details: error.message });
   }
 };

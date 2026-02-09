@@ -23,11 +23,59 @@ const courseRouter = express.Router();
  *     responses:
  *       200:
  *         description: Courses list
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                         example: 64f8e2b1234abcd5678ef012
+ *                       title:
+ *                         type: string
+ *                         example: "Intro to Programming"
+ *                       description:
+ *                         type: string
+ *                         example: "Learn the basics of programming"
+ *                       instructorId:
+ *                         type: string
+ *                         example: 64f8e2b1234abcd5678ef999
  *       401:
- *         description: No token provided
+ *         description: No token provided or invalid token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "No token provided"
  *       500:
- *         description: server Error
+ *         description: Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Server error"
  */
+
 courseRouter.get("/", authMiddleware, getAll);
 
 /**
@@ -40,6 +88,7 @@ courseRouter.get("/", authMiddleware, getAll);
  *       - in: path
  *         name: id
  *         required: true
+ *         description: Course ID
  *         schema:
  *           type: string
  *     security:
@@ -50,12 +99,13 @@ courseRouter.get("/", authMiddleware, getAll);
  *       400:
  *         description: Invalid course ID
  *       404:
- *         Course not found
+ *         description: Course not found
  *       401:
- *         description: No token provided
+ *         description: No token provided or invalid token
  *       500:
- *         description: server Error
+ *         description: Server error
  */
+
 courseRouter.get("/:id", authMiddleware, getById);
 
 /**
@@ -137,6 +187,30 @@ courseRouter.put("/:id", authInstructor, Update);
 
 /**
  * @swagger
+ * /api/courses/instructor/{id}:
+ *   get:
+ *     summary: Anyone authonticated can  Get instructor courses
+ *     tags: [Courses]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: List of courses
+ *       400:
+ *         description: invalid InstructorId id
+ *       404:
+ *         description: cources not found
+ *       500:
+ *         description: Server error
+ */
+courseRouter.get("/instructor/:id", getInstructorCources);
+
+/**
+ * @swagger
  * /api/courses/{id}:
  *   delete:
  *     summary: Delete a course
@@ -163,29 +237,7 @@ courseRouter.put("/:id", authInstructor, Update);
  */
 courseRouter.delete("/:id", authInstructor, deleteOne);
 
-/**
- * @swagger
- * /api/courses/instructor/{id}:
- *   get:
- *     summary: Anyone authonticated can  Get instructor courses
- *     tags: [Courses]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: List of courses
- *       400:
- *         description: invalid InstructorId id
- *       404:
- *         description: cources not found
- *       500:
- *         description: Server error
- */
-courseRouter.get("/instructor/:id", getInstructorCources);
+
 
 
 export default courseRouter;

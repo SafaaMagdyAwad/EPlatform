@@ -6,7 +6,6 @@ import {
   updateSectionCtrl,
   deleteSectionCtrl,
 } from "../controllers/section.controller.js";
-
 import authInstructor from "../Middlewares/authInstructor.js";
 
 const sectionRouter = express.Router();
@@ -48,12 +47,30 @@ const sectionRouter = express.Router();
  *     responses:
  *       201:
  *         description: Section created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                     courseId:
+ *                       type: string
+ *                     title:
+ *                       type: string
+ *                     order:
+ *                       type: number
  *       401:
- *         description: No token provided
+ *         description: No token provided or invalid token
  *       500:
  *         description: Server error
  */
-
 sectionRouter.post("/", authInstructor, createSectionCtrl);
 
 /**
@@ -66,14 +83,35 @@ sectionRouter.post("/", authInstructor, createSectionCtrl);
  *       - in: path
  *         name: courseId
  *         required: true
+ *         description: Course ID
  *         schema:
  *           type: string
- *         description: ID of the course
  *     responses:
  *       200:
  *         description: Sections retrieved
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       courseId:
+ *                         type: string
+ *                       title:
+ *                         type: string
+ *                       order:
+ *                         type: number
  *       404:
- *         description: sections not found
+ *         description: Sections not found
  *       500:
  *         description: Server error
  */
@@ -89,15 +127,35 @@ sectionRouter.get("/course/:courseId", getSectionsCtrl);
  *       - in: path
  *         name: id
  *         required: true
+ *         description: Section ID
  *         schema:
  *           type: string
  *     responses:
  *       200:
  *         description: Section retrieved
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                     courseId:
+ *                       type: string
+ *                     title:
+ *                       type: string
+ *                     order:
+ *                       type: number
  *       404:
  *         description: Section not found
  *       500:
- *         description: Server Error
+ *         description: Server error
  */
 sectionRouter.get("/:id", getSectionCtrl);
 
@@ -113,6 +171,7 @@ sectionRouter.get("/:id", getSectionCtrl);
  *       - in: path
  *         name: id
  *         required: true
+ *         description: Section ID
  *         schema:
  *           type: string
  *     requestBody:
@@ -128,11 +187,30 @@ sectionRouter.get("/:id", getSectionCtrl);
  *                 type: number
  *     responses:
  *       200:
- *         description: Section updated
+ *         description: Section updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                     courseId:
+ *                       type: string
+ *                     title:
+ *                       type: string
+ *                     order:
+ *                       type: number
+ *       401:
+ *         description: No token provided or invalid token
  *       404:
  *         description: Section not found
- *       401:
- *         description: No token provided
  *       500:
  *         description: Server error
  */
@@ -150,13 +228,22 @@ sectionRouter.patch("/:id", authInstructor, updateSectionCtrl);
  *       - in: path
  *         name: id
  *         required: true
+ *         description: Section ID
  *         schema:
  *           type: string
  *     responses:
  *       200:
- *         description: Section deleted
+ *         description: Section deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
  *       401:
- *         description: No token provided
+ *         description: No token provided or invalid token
  *       404:
  *         description: Section not found
  *       500:

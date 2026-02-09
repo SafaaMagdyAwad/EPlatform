@@ -1,8 +1,8 @@
+import connectDB from "./config/db.js";
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import dotenv from "dotenv";
-import mongoose from "mongoose";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./config/swagger.js";
 const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css";
@@ -24,10 +24,8 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 /* ================= Database ================= */
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ MongoDB Connected"))
-  .catch((err) => console.error("❌ DB Error:", err));
+
+await connectDB();
 
 
 /* ================= Routes ================= */
@@ -61,8 +59,11 @@ app.use(
 );
 /* ================= Error Handling ================= */
 app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).json({ message: "Server Error" });
+  console.error(" Error:", err);
+
+  res.status(err.statusCode || 500).json({
+    message: err.message || "Internal Server Error",
+  });
 });
 
 /* ================= Server ================= */

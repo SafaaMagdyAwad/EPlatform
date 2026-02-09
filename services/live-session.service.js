@@ -1,56 +1,59 @@
-import LiveSession from "../models/liveSession.model.js";
+import liveSessionModel from "../models/liveSession.model.js";
 export const createSession = async (data) => {
   try {
-    const session = new LiveSession(data);
-    return await session.save();
+    console.log(data, "body data")
+    const session = await liveSessionModel.create(data);
+    return session;
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+    throw error;
   }
 }
 export const getAllSessions = async () => {
   try {
-    return await LiveSession.find()
+    return await liveSessionModel.find()
       .populate("courseId", "title")
       .populate("instructorId", "name");
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+
+    error.statusCode = 400;
+    throw error;
+
   }
 }
 export const getSessionById = async (id) => {
   try {
-    return await LiveSession.findById(id)
+    return await liveSessionModel.findById(id)
       .populate("courseId", "title")
       .populate("instructorId", "name")
       .populate("attendees", "name email");
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+    throw error;
   }
 }
 export const joinSessionService = async (sessionId, userId) => {
   try {
-    const session = await LiveSession.findById(sessionId);
+    const session = await liveSessionModel.findById(sessionId);
     if (!session) throw new Error("Session not found");
     if (session.attendees.includes(userId)) throw new Error("Already joined");
-    if (session.maxStudents && session.attendees.length >= session.maxStudents)
-      throw new Error("Session is full");
+    if (session.maxStudents && session.attendees.length >= session.maxStudents) {
+
+      const error = new Error("Session is full");
+      error.status = 409; 
+      throw error;
+    }
 
     session.attendees.push(userId);
     return await session.save();
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+    throw error;
   }
 }
 export const updateSessionStatus = async (sessionId, status) => {
   try {
-    return await LiveSession.findByIdAndUpdate(sessionId, { status }, { new: true });
+    return await liveSessionModel.findByIdAndUpdate(sessionId, { status }, { new: true });
 
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+    throw error;
   }
 }
 

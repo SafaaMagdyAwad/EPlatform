@@ -11,9 +11,8 @@ export const getMyProfile = async (userId) => {
     }
 
     return user;
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+  }  catch (error) {
+          throw error;
   }
 };
 
@@ -35,9 +34,8 @@ export const updateMyProfile = async (userId, updates) => {
     }
 
     return user;
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+  }  catch (error) {
+          throw error;
   }
 };
 export const deleteMyProfile = async (userId) => {
@@ -53,9 +51,8 @@ export const deleteMyProfile = async (userId) => {
     }
 
     return user;
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+  }  catch (error) {
+          throw error;
   }
 };
 
@@ -90,8 +87,7 @@ export const changeMyPassword = async (userId, oldPassword, newPassword) => {
 
     user.password = newPassword;
     await user.save();
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+  }  catch (error) {
+          throw error;
   }
 };

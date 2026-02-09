@@ -66,7 +66,6 @@ app.use((err, req, res, next) => {
 });
 
 /* ================= Server ================= */
-// Only listen if not running on Vercel
 if (process.env.NODE_ENV !== 'production') {
   const port = process.env.PORT || 3000;
   app.listen(port, () => {
@@ -74,5 +73,4 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
-// FIX: Use export default instead of module.exports
 export default app;

@@ -62,6 +62,8 @@ const authRouter = express.Router();
  *                 message:
  *                   type: string
  *                   example: "Invalid or missing fields"
+ *       500:
+ *         description: server Error
  */
 
 /**
@@ -110,6 +112,8 @@ const authRouter = express.Router();
  *                 message:
  *                   type: string
  *                   example: "Invalid email or password"
+ *       500:
+ *         description: server Error
  */
 
 /**
@@ -151,6 +155,8 @@ const authRouter = express.Router();
  *                 message:
  *                   type: string
  *                   example: "Teacher with this email not found"
+ *       500:
+ *         description: server Error
  */
 
 /**
@@ -200,6 +206,8 @@ const authRouter = express.Router();
  *                 message:
  *                   type: string
  *                   example: "Invalid or expired token"
+ *       500:
+ *         description: server Error
  */
 
 /**
@@ -232,6 +240,8 @@ const authRouter = express.Router();
  *                 message:
  *                   type: string
  *                   example: "No refresh token"
+ *       500:
+ *         description: server Error
  */
 
 /**

@@ -45,6 +45,8 @@ const sectionRouter = express.Router();
  *     responses:
  *       201:
  *         description: Section created successfully
+ *       401:
+ *         description: No token provided
  *       500:
  *         description: Server error
  */
@@ -121,6 +123,8 @@ sectionRouter.get("/:id", getSectionCtrl);
  *         description: Section updated
  *       404:
  *         description: Section not found
+ *       401:
+ *         description: No token provided
  *       500:
  *         description: Server error
  */
@@ -143,6 +147,8 @@ sectionRouter.patch("/:id", authInstructor, updateSectionCtrl);
  *     responses:
  *       200:
  *         description: Section deleted
+ *       401:
+ *         description: No token provided
  *       500:
  *         description: Server error
  */

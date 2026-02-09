@@ -1,7 +1,7 @@
 import { createSession, getAllSessions, getSessionById, joinSessionService, updateSessionStatus } from "../services/live-session.service.js";
 
 
-export const addSession = async (req, res) =>{
+export const addSession = async (req, res) => {
     try {
         const session = await createSession(req.body);
         res.status(201).json(session);
@@ -28,10 +28,12 @@ export const getSession = async (req, res) => {
 }
 export const joinSession = async (req, res) => {
     try {
-        const session = await joinSessionService(req.params.id, req.body.userId);
+        const userId = req.user.id;
+        console.log(userId);
+        const session = await joinSessionService(req.params.id, userId);
         res.json(session);
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        res.status(500).json({ message: err.message });
     }
 }
 export const updateStatus = async (req, res) => {
@@ -39,7 +41,7 @@ export const updateStatus = async (req, res) => {
         const session = await updateSessionStatus(req.params.id, req.body.status);
         res.json(session);
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        res.status(500).json({ message: err.message });
     }
 }
 

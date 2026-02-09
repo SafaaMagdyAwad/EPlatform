@@ -4,19 +4,17 @@ import CourseModel from "../models/Course.model.js";
 export const getAllCourses = async () => {
   try {
     return await CourseModel.find();
-  }catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+  } catch (error) {
+          throw error;
   }
 };
 
 // جلب كورسات المدرس
-export const getInstructorCourses = async (instructorId) => {
+export const InstrctorCoursesService = async (instructorId) => {
   try {
     return await CourseModel.find({ instructorId });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+  }  catch (error) {
+          throw error;
   }
 };
 
@@ -34,9 +32,8 @@ export const getCourseById = async (id) => {
 export const createCourse = async (data) => {
   try {
     return await CourseModel.create(data);
-  }catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+  } catch (error) {
+          throw error;
   }
 };
 
@@ -49,9 +46,8 @@ export const updateCourse = async (id, data) => {
   const updated = await CourseModel.findByIdAndUpdate(id, data, { new: true });
   if (!updated) throw new Error("Course not found");
   return updated;
-  }catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+  } catch (error) {
+          throw error;
   }
 };
 
@@ -64,8 +60,7 @@ export const deleteCourse = async (id) => {
   const deleted = await CourseModel.findByIdAndDelete(id);
   if (!deleted) throw new Error("Course not found");
   return deleted;
-  }catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+  } catch (error) {
+          throw error;
   }
 };

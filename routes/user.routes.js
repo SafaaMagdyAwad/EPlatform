@@ -84,6 +84,8 @@ const userRouter = express.Router();
  *                 message:
  *                   type: string
  *                   example: "User not found"
+ *       500:
+ *         description: server Error
  */
 userRouter.get("/me", authMiddleware, me);
 
@@ -127,6 +129,8 @@ userRouter.get("/me", authMiddleware, me);
  *                 message:
  *                   type: string
  *                   example: "Email already exists"
+ *       500:
+ *         description: server Error
  */
 
 userRouter.patch("/me", authMiddleware, updateUser);
@@ -179,6 +183,8 @@ userRouter.patch("/me", authMiddleware, updateUser);
  *         description: Unauthorized
  *       404:
  *         description: User not found
+ *       500:
+ *         description: server Error
  */
 
 userRouter.patch("/change-password", authMiddleware, changePassword);
@@ -202,6 +208,8 @@ userRouter.patch("/change-password", authMiddleware, changePassword);
  *         description: Unauthorized
  *       404:
  *         description: User not found
+ *       500:
+ *         description: Server error
  */
 
 userRouter.delete("/me", authMiddleware, deleteAccount);

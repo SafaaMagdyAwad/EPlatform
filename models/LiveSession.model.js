@@ -10,7 +10,6 @@ const liveSessionSchema = new mongoose.Schema(
     instructorId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
     },
     startTime: Date,
     duration: Number,

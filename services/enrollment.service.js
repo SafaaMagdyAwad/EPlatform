@@ -16,9 +16,8 @@ export const createEnroll = async (studentId, courseId) => {
     });
 
     return enroll;
-  }catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+  } catch (error) {
+          throw error;
   }
 };
 export const getMyProgressService = async (studentId, courseId) => {
@@ -31,8 +30,7 @@ export const getMyProgressService = async (studentId, courseId) => {
     }
     console.log(enroll, "enroll");
     return enroll;
-  }catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+  } catch (error) {
+          throw error;
   }
 };

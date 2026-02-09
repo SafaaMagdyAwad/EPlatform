@@ -28,6 +28,8 @@ const enrollmentRouter = express.Router();
  *     responses:
  *       201:
  *         description: Student enrolled successfully
+ *       401:
+ *         description: No token provided
  *       409:
  *         description: Student is already enrolled in this course
  *         content:
@@ -76,6 +78,8 @@ const enrollmentRouter = express.Router();
  *                   items:
  *                     type: string
  *                   example: ["lessonId1","lessonId2"]
+ *       401:
+ *         description: No token provided"
  *       404:
  *         description: Student is NOT enrolled in this course
  *         content:

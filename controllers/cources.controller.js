@@ -1,4 +1,4 @@
-import { createCourse, deleteCourse, getAllCourses, getCourseById, InstrctorCoursesService, updateCourse } from "../services/course.service.js";
+import { createCourse, deleteCourse, getAllCourses, getCourseById, updateCourse } from "../services/course.service.js";
 
 /**
  * Get all courses

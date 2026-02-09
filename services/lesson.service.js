@@ -5,9 +5,8 @@ export const createLesson = async (data) => {
   try{
     const lesson = await LessonModel.create(data);
   return lesson;
-  }catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+  } catch (error) {
+          throw error;
   }
 };
 
@@ -15,9 +14,8 @@ export const createLesson = async (data) => {
 export const getLessonsBySection = async (sectionId) => {
   try{
     return await LessonModel.find({ sectionId }).sort({ order: 1 });
-  }catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+  } catch (error) {
+          throw error;
   }
 };
 
@@ -25,9 +23,8 @@ export const getLessonsBySection = async (sectionId) => {
 export const getLessonById = async (id) => {
   try{
     return await LessonModel.findById(id);
-  }catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+  } catch (error) {
+          throw error;
   }
 };
 
@@ -39,9 +36,8 @@ export const updateLesson = async (id, updates) => {
     runValidators: true,
   });
   return lesson;
-  }catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+  } catch (error) {
+          throw error;
   }
 };
 
@@ -50,8 +46,7 @@ export const deleteLesson = async (id) => {
   try{
 await LessonModel.findByIdAndDelete(id);
   return true;
-  }catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+  } catch (error) {
+          throw error;
   }
 };

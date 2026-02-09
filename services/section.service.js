@@ -5,9 +5,8 @@ export const createSection = async (courseId, title, order) => {
   try {
     const section = await SectionModel.create({ courseId, title, order });
     return section;
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+  }  catch (error) {
+          throw error;
   }
 };
 
@@ -16,9 +15,8 @@ export const getSectionsByCourse = async (courseId) => {
   try {
     return await SectionModel.find({ courseId }).sort({ order: 1 });
 
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+  }  catch (error) {
+          throw error;
   }
 };
 
@@ -26,9 +24,8 @@ export const getSectionsByCourse = async (courseId) => {
 export const getSectionById = async (id) => {
   try {
     return await SectionModel.findById(id);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+  }  catch (error) {
+          throw error;
   }
 };
 
@@ -40,9 +37,8 @@ export const updateSection = async (id, updates) => {
       runValidators: true,
     });
     return section;
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+  }  catch (error) {
+          throw error;
   }
 };
 
@@ -51,8 +47,7 @@ export const deleteSection = async (id) => {
   try {
     await SectionModel.findByIdAndDelete(id);
     return true;
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error', details: error.message });
+  }  catch (error) {
+          throw error;
   }
 };

@@ -28,9 +28,7 @@ const liveSessionRouter = express.Router();
  *           schema:
  *             type: object
  *             properties:
- *               courseId:
- *                 type: string
- *               instructorId:
+ *               courseId: 69888e9992fc2fce915786c4
  *                 type: string
  *               startTime:
  *                 type: string
@@ -42,6 +40,12 @@ const liveSessionRouter = express.Router();
  *     responses:
  *       201:
  *         description: Session created
+ *       400:
+ *         description: Not Found
+ *       401:
+ *         description: No token provided
+ *       500:
+ *         description: server Error
  */
 liveSessionRouter.post("/",  authInstructor, addSession);
 
@@ -73,6 +77,8 @@ liveSessionRouter.get("/", getSessions);
  *     responses:
  *       200:
  *         description: Session data
+ *       500:
+ *         description: Server Error
  */
 liveSessionRouter.get("/:id", getSession);
 
@@ -82,18 +88,22 @@ liveSessionRouter.get("/:id", getSession);
  *   post:
  *     summary: Join a live session
  *     tags: [LiveSessions]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               userId:
- *                 type: string
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Session ID 
  *     responses:
  *       200:
  *         description: Joined successfully
+ *       401:
+ *         description: No token provided
+ *       409:
+ *         description: Session is full
+ *       500:
+ *         description: server Error
  */
 liveSessionRouter.post("/:id/join", authMiddleware, joinSession);
 
@@ -103,6 +113,13 @@ liveSessionRouter.post("/:id/join", authMiddleware, joinSession);
  *   patch:
  *     summary: Update session status
  *     tags: [LiveSessions]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Session ID
  *     requestBody:
  *       required: true
  *       content:
@@ -116,6 +133,10 @@ liveSessionRouter.post("/:id/join", authMiddleware, joinSession);
  *     responses:
  *       200:
  *         description: Status updated
+ *       401:
+ *         description: No token provided
+ *       500:
+ *         description: server Error
  */
 liveSessionRouter.patch("/:id/status", authInstructor, updateStatus);
 

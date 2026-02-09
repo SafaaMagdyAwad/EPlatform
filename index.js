@@ -45,6 +45,7 @@ app.use('/api/live-sessions',liveSessionRouter)
 
 
 /* ================= Swagger ================= */
+if (process.env.NODE_ENV !== 'production') {
 
 app.use(
   "/api-docs",
@@ -57,6 +58,7 @@ app.use(
     ],
   })
 );
+}
 /* ================= Error Handling ================= */
 app.use((err, req, res, next) => {
   console.error(" Error:", err);

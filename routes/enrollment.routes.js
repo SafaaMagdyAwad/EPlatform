@@ -13,59 +13,18 @@ const enrollmentRouter = express.Router();
 /**
  * @swagger
  * /api/enrollment/{courseId}/enroll:
- *   post:
- *     summary: Enroll in course
- *     tags: [Enrollment]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: courseId
- *         schema:
- *           type: string
- *         required: true
- *         description: ID of the course
- *     responses:
- *     201:
- *       description: Student enrolled successfully
- *      content:
- *         application/json:
- *        schema:
- *           type: object
- *          properties:
- *         message:
- *            type: string
- *           example: "Enrolled successfully"
- *       401:
- *         description: No token provided
- *       409:
- *         description: Student is already enrolled in this course
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "Student is already enrolled in this course"
- *       500:
- *         description: Server error
- */
-
-/**
- * @swagger
- * /api/enrollment/{courseId}/enroll:
  *   get:
  *     summary: Get course progress
- *     tags: [Enrollment]
+ *     tags:
+ *       - Enrollment
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: courseId
+ *         required: true
  *         schema:
  *           type: string
- *         required: true
  *         description: ID of the course
  *     responses:
  *       200:
@@ -85,11 +44,11 @@ const enrollmentRouter = express.Router();
  *                   type: array
  *                   items:
  *                     type: string
- *                   example: ["lessonId1","lessonId2"]
+ *                   example: ["lessonId1", "lessonId2"]
  *       401:
- *         description: No token provided"
+ *         description: No token provided
  *       404:
- *         description: Student is NOT enrolled in this course
+ *         description: Student is not enrolled in this course
  *         content:
  *           application/json:
  *             schema:
@@ -98,6 +57,41 @@ const enrollmentRouter = express.Router();
  *                 message:
  *                   type: string
  *                   example: "Student is not enrolled in this course"
+ *       500:
+ *         description: Server error
+ */
+
+/**
+ * @swagger
+ * /api/enrollment/{courseId}/enroll:
+ *   post:
+ *     summary: Enroll in course
+ *     tags:
+ *       - Enrollment
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: courseId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the course
+ *     responses:
+ *       201:
+ *         description: Student enrolled successfully
+ *       401:
+ *         description: No token provided
+ *       409:
+ *         description: Student is already enrolled in this course
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Student is already enrolled in this course"
  *       500:
  *         description: Server error
  */

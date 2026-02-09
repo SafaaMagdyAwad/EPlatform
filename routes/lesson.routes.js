@@ -55,7 +55,7 @@ const lessonRouter = express.Router();
  *       201:
  *         description: Lesson created successfully
  *       401:
- *         description: No token provided"
+ *         description: No token provided
  *       500:
  *         description: Server error
  */
@@ -139,14 +139,13 @@ lessonRouter.get("/:id", getLessonCtrl);
  *       200:
  *         description: Lesson updated successfully
  *       401:
- *         description: No token provided"
- *       500:
- *         description: server Error
+ *         description: No token provided
  *       404:
  *         description: Lesson not found
  *       500:
  *         description: Server error
  */
+
 lessonRouter.patch("/:id", authInstructor, updateLessonCtrl);
 
 /**

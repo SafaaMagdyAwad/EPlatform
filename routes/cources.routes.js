@@ -24,7 +24,7 @@ const courseRouter = express.Router();
  *       200:
  *         description: Courses list
  *       401:
- *         description: No token provided"
+ *         description: No token provided
  *       500:
  *         description: server Error
  */
@@ -48,7 +48,7 @@ courseRouter.get("/", authMiddleware, getAll);
  *       200:
  *         description: Course data
  *       401:
- *         description: No token provided"
+ *         description: No token provided
  *       500:
  *         description: server Error
  */
@@ -86,7 +86,7 @@ courseRouter.get("/:id", authMiddleware, getById);
  *       201:
  *         description: Course created successfully
  *       401:
- *         description: No token provided"
+ *         description: No token provided
  *       500:
  *         description: server Error
  */
@@ -121,7 +121,7 @@ courseRouter.post("/", authInstructor, create);
  *       200:
  *         description: Course updated successfully
  *       401:
- *         description: No token provided"
+ *         description: No token provided
  *       500:
  *         description: server Error
  */
@@ -145,7 +145,7 @@ courseRouter.put("/:id", authInstructor, Update);
  *       200:
  *         description: Course deleted successfully
  *       401:
- *         description: No token provided"
+ *         description: No token provided
  *       500:
  *         description: server Error
  */
@@ -157,7 +157,7 @@ courseRouter.delete("/:id", authInstructor, deleteOne);
  *   get:
  *     summary: Anyone authonticated can  Get instructor courses
  *     tags: [Courses]
-  *     parameters:
+ *     parameters:
  *       - in: path
  *         name: id
  *         required: true

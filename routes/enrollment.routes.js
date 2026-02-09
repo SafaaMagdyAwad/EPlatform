@@ -26,8 +26,16 @@ const enrollmentRouter = express.Router();
  *         required: true
  *         description: ID of the course
  *     responses:
- *       201:
- *         description: Student enrolled successfully
+ *     201:
+ *       description: Student enrolled successfully
+ *      content:
+ *         application/json:
+ *        schema:
+ *           type: object
+ *          properties:
+ *         message:
+ *            type: string
+ *           example: "Enrolled successfully"
  *       401:
  *         description: No token provided
  *       409:

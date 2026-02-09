@@ -36,12 +36,15 @@ const sectionRouter = express.Router();
  *               - courseId
  *               - title
  *             properties:
- *               courseId: 69888e9992fc2fce915786c4
+ *               courseId:
  *                 type: string
- *               title: section 1
+ *                 example: "69888e9992fc2fce915786c4"
+ *               title:
  *                 type: string
- *               order: 1
+ *                 example: "Section 1"
+ *               order:
  *                 type: number
+ *                 example: 1
  *     responses:
  *       201:
  *         description: Section created successfully
@@ -50,6 +53,7 @@ const sectionRouter = express.Router();
  *       500:
  *         description: Server error
  */
+
 sectionRouter.post("/", authInstructor, createSectionCtrl);
 
 /**

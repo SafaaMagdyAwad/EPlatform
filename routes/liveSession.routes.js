@@ -27,26 +27,34 @@ const liveSessionRouter = express.Router();
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - courseId
+ *               - startTime
  *             properties:
- *               courseId: 69888e9992fc2fce915786c4
+ *               courseId:
  *                 type: string
+ *                 example: "69888e9992fc2fce915786c4"
  *               startTime:
  *                 type: string
  *                 format: date-time
+ *                 example: "2026-02-10T18:00:00Z"
  *               duration:
  *                 type: number
+ *                 example: 90
  *               maxStudents:
  *                 type: number
+ *                 example: 25
  *     responses:
  *       201:
  *         description: Session created
  *       400:
- *         description: Not Found
+ *         description: Not found
  *       401:
  *         description: No token provided
  *       500:
- *         description: server Error
+ *         description: Server error
  */
+
 liveSessionRouter.post("/",  authInstructor, addSession);
 
 /**
@@ -59,6 +67,7 @@ liveSessionRouter.post("/",  authInstructor, addSession);
  *       200:
  *         description: List of sessions
  */
+
 liveSessionRouter.get("/", getSessions);
 
 /**

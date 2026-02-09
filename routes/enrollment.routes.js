@@ -57,6 +57,16 @@ const enrollmentRouter = express.Router();
  *                 message:
  *                   type: string
  *                   example: "Student is not enrolled in this course"
+ *       409:
+ *         description: Student is NOT enrolled in this course
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Student is NOT enrolled in this course" 
  *       500:
  *         description: Server error
  */

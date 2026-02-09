@@ -76,6 +76,8 @@ lessonRouter.post("/", authInstructor, createLessonCtrl);
  *     responses:
  *       200:
  *         description: Lessons retrieved successfully
+ *       404:
+ *         description: lessons not found
  *       500:
  *         description: Server error
  */
@@ -98,6 +100,8 @@ lessonRouter.get("/section/:sectionId", getLessonsCtrl);
  *         description: Lesson retrieved successfully
  *       404:
  *         description: Lesson not found
+ *       500:
+ *         description: Server error
  */
 lessonRouter.get("/:id", getLessonCtrl);
 
@@ -167,6 +171,8 @@ lessonRouter.patch("/:id", authInstructor, updateLessonCtrl);
  *         description: Lesson deleted successfully
  *       401:
  *         description: No token provided
+ *       404:
+ *         description: Lesson not found
  *       500:
  *         description: Server error
  */

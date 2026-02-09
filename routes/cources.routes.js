@@ -47,6 +47,10 @@ courseRouter.get("/", authMiddleware, getAll);
  *     responses:
  *       200:
  *         description: Course data
+ *       400:
+ *         description: Invalid course ID
+ *       404:
+ *         Course not found
  *       401:
  *         description: No token provided
  *       500:
@@ -120,6 +124,10 @@ courseRouter.post("/", authInstructor, create);
  *     responses:
  *       200:
  *         description: Course updated successfully
+ *       400:
+ *         description: invalid course id
+ *       404:
+ *         description: course not found
  *       401:
  *         description: No token provided
  *       500:
@@ -144,6 +152,10 @@ courseRouter.put("/:id", authInstructor, Update);
  *     responses:
  *       200:
  *         description: Course deleted successfully
+ *       400:
+ *         description: invalid course id
+ *       404:
+ *         description: course not found
  *       401:
  *         description: No token provided
  *       500:
@@ -166,6 +178,10 @@ courseRouter.delete("/:id", authInstructor, deleteOne);
  *     responses:
  *       200:
  *         description: List of courses
+ *       400:
+ *         description: invalid InstructorId id
+ *       404:
+ *         description: cources not found
  *       500:
  *         description: Server error
  */

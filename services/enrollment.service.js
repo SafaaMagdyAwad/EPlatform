@@ -25,7 +25,7 @@ export const getMyProgressService = async (studentId, courseId) => {
     const enroll = await EnrollmentModel.findOne({ studentId, courseId });
     if (!enroll) {
       const error = new Error("Student is NOT enrolled in this course");
-      error.statusCode = 409; // Conflict
+      error.statusCode = 409; 
       throw error;
     }
     console.log(enroll, "enroll");

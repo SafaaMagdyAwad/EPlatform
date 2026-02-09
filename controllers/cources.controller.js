@@ -1,4 +1,5 @@
-import { createCourse, deleteCourse, getAllCourses, getCourseById, updateCourse } from "../services/course.service.js";
+import { createCourse, deleteCourse, getAllCourses, getCourseById, InstrctorCoursesService, updateCourse } from "../services/course.service.js";
+
 
 /**
  * Get all courses
@@ -12,19 +13,8 @@ export const getAll = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-/**
- * Get instructor courses
- */
-export const getInstructorCources = async (req, res) => {
-  try {
-    const instructorId=req.params.id;
-    const courses = await InstrctorCoursesService(instructorId);
-    res.status(200).json({ courses });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error" });
-  }
-};
+
+
 
 /**
  * Get course by id
@@ -46,12 +36,9 @@ export const getById = async (req, res) => {
 export const create = async (req, res) => {
   try {
     const instructorId=req.user.id;
-    console.log(instructorId ,"instructorId");
     req.body.instructorId=instructorId;
-    console.log(req.body);
     
     const course = await createCourse(req.body);
-    
     res.status(201).json({ message: "Course created", course });
   } catch (error) {
     console.error(error);
@@ -87,3 +74,19 @@ export const deleteOne = async (req, res) => {
   }
 };
 
+/**
+ * Get instructor courses
+ */
+export const getInstructorCources = async (req, res) => {
+  try {
+    const instructorId=req.params.id;
+    const courses = await InstrctorCoursesService(instructorId);
+    if(!courses){
+      res.status(404).json({message:'cources not found'})
+    }
+    res.status(200).json({ courses });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};

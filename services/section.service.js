@@ -5,8 +5,8 @@ export const createSection = async (courseId, title, order) => {
   try {
     const section = await SectionModel.create({ courseId, title, order });
     return section;
-  }  catch (error) {
-          throw error;
+  } catch (error) {
+    throw error;
   }
 };
 
@@ -14,9 +14,8 @@ export const createSection = async (courseId, title, order) => {
 export const getSectionsByCourse = async (courseId) => {
   try {
     return await SectionModel.find({ courseId }).sort({ order: 1 });
-
-  }  catch (error) {
-          throw error;
+  } catch (error) {
+    throw error;
   }
 };
 
@@ -24,8 +23,8 @@ export const getSectionsByCourse = async (courseId) => {
 export const getSectionById = async (id) => {
   try {
     return await SectionModel.findById(id);
-  }  catch (error) {
-          throw error;
+  } catch (error) {
+    throw error;
   }
 };
 
@@ -37,17 +36,17 @@ export const updateSection = async (id, updates) => {
       runValidators: true,
     });
     return section;
-  }  catch (error) {
-          throw error;
+  } catch (error) {
+    throw error;
   }
 };
 
 // Delete Section
 export const deleteSection = async (id) => {
   try {
-    await SectionModel.findByIdAndDelete(id);
-    return true;
-  }  catch (error) {
-          throw error;
+    const section =await SectionModel.findByIdAndDelete(id);
+    return section;
+  } catch (error) {
+    throw error;
   }
 };

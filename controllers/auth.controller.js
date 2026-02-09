@@ -81,8 +81,6 @@ export const register = async (req, res) => {
  */
 export const login = async (req, res) => {
   try {
-    console.log("JWT_SECRET:", process.env.JWT_SECRET);
-console.log("REFRESH_SECRET:", process.env.REFRESH_SECRET);
 
     const { email, password } = req.body;
 
@@ -139,7 +137,7 @@ export const forgotPassword = async (req, res) => {
         const user = await UserModel.findOne({ email });
 
         if (!user) {
-            return res.json({
+            return res.status(404).json({
                 message: "Email is not connected to any account"
             });
         }
@@ -216,7 +214,7 @@ export const resetPassword = async (req, res) => {
 
         await user.save();
 
-        res.json({
+        res.status(200).json({
             message: "Password reset successful"
         });
 

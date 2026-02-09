@@ -19,6 +19,9 @@ export const getLessonsCtrl = async (req, res) => {
   try {
     const { sectionId } = req.params;
     const lessons = await getLessonsBySection(sectionId);
+    if (!lessons) {
+      res.status(404).json({ message: 'lessons not found' })
+    }
     res.status(200).json({ lessons });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -47,7 +50,8 @@ export const updateLessonCtrl = async (req, res) => {
 
 export const deleteLessonCtrl = async (req, res) => {
   try {
-    await deleteLesson(req.params.id);
+    const lesson = await deleteLesson(req.params.id);
+    if (!lesson) return res.status(404).json({ message: "Lesson not found" });
     res.status(200).json({ message: "Lesson deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });

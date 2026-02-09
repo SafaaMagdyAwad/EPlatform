@@ -2,51 +2,51 @@ import LessonModel from "../models/Lesson.model.js";
 
 // Create Lesson
 export const createLesson = async (data) => {
-  try{
+  try {
     const lesson = await LessonModel.create(data);
-  return lesson;
+    return lesson;
   } catch (error) {
-          throw error;
+    throw error;
   }
 };
 
 // Get all Lessons by Section
 export const getLessonsBySection = async (sectionId) => {
-  try{
+  try {
     return await LessonModel.find({ sectionId }).sort({ order: 1 });
   } catch (error) {
-          throw error;
+    throw error;
   }
 };
 
 // Get Single Lesson
 export const getLessonById = async (id) => {
-  try{
+  try {
     return await LessonModel.findById(id);
   } catch (error) {
-          throw error;
+    throw error;
   }
 };
 
 // Update Lesson
 export const updateLesson = async (id, updates) => {
-  try{
+  try {
     const lesson = await LessonModel.findByIdAndUpdate(id, updates, {
-    new: true,
-    runValidators: true,
-  });
-  return lesson;
+      new: true,
+      runValidators: true,
+    });
+    return lesson;
   } catch (error) {
-          throw error;
+    throw error;
   }
 };
 
 // Delete Lesson
 export const deleteLesson = async (id) => {
-  try{
-await LessonModel.findByIdAndDelete(id);
-  return true;
+  try {
+    const lesson = await LessonModel.findByIdAndDelete(id);
+    return lesson;
   } catch (error) {
-          throw error;
+    throw error;
   }
 };

@@ -62,6 +62,26 @@ const authRouter = express.Router();
  *                 message:
  *                   type: string
  *                   example: "Invalid or missing fields"
+ *       403:
+ *         description: Forbidden 
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Register admin"
+ *       409:
+ *         description: Email already exists
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "register existing email"
  *       500:
  *         description: server Error
  */
@@ -102,8 +122,18 @@ const authRouter = express.Router();
  *                 message:
  *                   type: string
  *                   example: "Login successful"
+ *       400:
+ *         description: Invalid input
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Email and password are required"
  *       401:
- *         description: Invalid credentials
+ *         description: Invalid Data 
  *         content:
  *           application/json:
  *             schema:
@@ -115,6 +145,7 @@ const authRouter = express.Router();
  *       500:
  *         description: server Error
  */
+
 
 /**
  * @swagger
@@ -145,6 +176,16 @@ const authRouter = express.Router();
  *                 message:
  *                   type: string
  *                   example: "Reset password link sent to your email"
+ *       400:
+ *         description: Email not required
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "email is empty"
  *       404:
  *         description: Email not found
  *         content:
@@ -154,7 +195,7 @@ const authRouter = express.Router();
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "Teacher with this email not found"
+ *                   example: "Email is not connected to any account"
  *       500:
  *         description: server Error
  */

@@ -55,7 +55,7 @@ const liveSessionRouter = express.Router();
  *         description: Server error
  */
 
-liveSessionRouter.post("/",  authInstructor, addSession);
+liveSessionRouter.post("/", authInstructor, addSession);
 
 /**
  * @swagger
@@ -66,6 +66,10 @@ liveSessionRouter.post("/",  authInstructor, addSession);
  *     responses:
  *       200:
  *         description: List of sessions
+ *       404:
+ *         description:sessions not found
+ *       500:
+ *         description: Server Error
  */
 
 liveSessionRouter.get("/", getSessions);
@@ -86,6 +90,8 @@ liveSessionRouter.get("/", getSessions);
  *     responses:
  *       200:
  *         description: Session data
+ *       404:
+ *         description:session not found
  *       500:
  *         description: Server Error
  */

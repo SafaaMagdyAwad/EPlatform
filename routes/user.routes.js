@@ -120,7 +120,7 @@ userRouter.get("/me", authMiddleware, me);
  *       404:
  *         description: User not found
  *       409:
- *         description: Email already exists
+ *         description: Email linked to another account exists
  *         content:
  *           application/json:
  *             schema:
@@ -128,7 +128,7 @@ userRouter.get("/me", authMiddleware, me);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "Email already exists"
+ *                   example: "Email linked to another account exists"
  *       500:
  *         description: server Error
  */

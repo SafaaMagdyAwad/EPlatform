@@ -20,6 +20,9 @@ export const getSectionsCtrl = async (req, res) => {
   try {
     const { courseId } = req.params;
     const sections = await getSectionsByCourse(courseId);
+    if(!sections){
+      res.status(404).json({message:'sections not found'})
+    }
     res.status(200).json({ sections });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -48,7 +51,10 @@ export const updateSectionCtrl = async (req, res) => {
 
 export const deleteSectionCtrl = async (req, res) => {
   try {
-    await deleteSection(req.params.id);
+    const section=await deleteSection(req.params.id);
+    if(!section){
+      res.status(404).json({message:'Section Not found'})
+    }
     res.status(200).json({ message: "Section deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });

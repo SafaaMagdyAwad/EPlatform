@@ -22,27 +22,33 @@ export const me = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const userId = req.user.id;
-
     const allowedUpdates = ["name", "email", "avatar"];
     const updates = {};
 
     allowedUpdates.forEach((key) => {
-      if (req.body[key]) updates[key] = req.body[key];
+      if (req.body.hasOwnProperty(key)) updates[key] = req.body[key];
     });
+
+    if (Object.keys(updates).length === 0) {
+      return res.status(400).json({ message: "No valid fields to update" });
+    }
 
     const user = await updateMyProfile(userId, updates);
 
     res.status(200).json({
+      success: true,
       message: "User updated successfully",
       user,
     });
   } catch (error) {
     console.error(error);
     res.status(error.statusCode || 500).json({
+      success: false,
       message: error.message || "Server error",
     });
   }
 };
+
 export const deleteAccount = async (req, res) => {
   try {
     const userId = req.user.id;

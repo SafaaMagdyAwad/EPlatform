@@ -11,13 +11,19 @@ export const getMyProfile = async (userId) => {
     }
 
     return user;
-  }  catch (error) {
-          throw error;
+  } catch (error) {
+    throw error;
   }
 };
 
 export const updateMyProfile = async (userId, updates) => {
   try {
+    const existingUser = await UserModel.findOne({ email: updates.email });
+    if (existingUser && existingUser._id.toString() !== userId) {
+      const error = new Error("Email is already in use");
+      error.statusCode = 400;
+      throw error;
+    }
     const user = await UserModel.findByIdAndUpdate(
       userId,
       updates,
@@ -32,10 +38,17 @@ export const updateMyProfile = async (userId, updates) => {
       error.statusCode = 404;
       throw error;
     }
-
+    if (user.email != updates.email) {
+      const UserExists = await UserModel.findOne({ email });
+      if (UserExists) {
+        const error = new Error("Email linked to another account exists");
+        error.statusCode = 409;
+        throw error;
+      }
+    }
     return user;
-  }  catch (error) {
-          throw error;
+  } catch (error) {
+    throw error;
   }
 };
 export const deleteMyProfile = async (userId) => {
@@ -51,8 +64,8 @@ export const deleteMyProfile = async (userId) => {
     }
 
     return user;
-  }  catch (error) {
-          throw error;
+  } catch (error) {
+    throw error;
   }
 };
 
@@ -87,7 +100,7 @@ export const changeMyPassword = async (userId, oldPassword, newPassword) => {
 
     user.password = newPassword;
     await user.save();
-  }  catch (error) {
-          throw error;
+  } catch (error) {
+    throw error;
   }
 };

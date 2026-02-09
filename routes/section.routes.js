@@ -72,6 +72,8 @@ sectionRouter.post("/", authInstructor, createSectionCtrl);
  *     responses:
  *       200:
  *         description: Sections retrieved
+ *       404:
+ *         description: sections not found
  *       500:
  *         description: Server error
  */
@@ -94,6 +96,8 @@ sectionRouter.get("/course/:courseId", getSectionsCtrl);
  *         description: Section retrieved
  *       404:
  *         description: Section not found
+ *       500:
+ *         description: Server Error
  */
 sectionRouter.get("/:id", getSectionCtrl);
 
@@ -153,6 +157,8 @@ sectionRouter.patch("/:id", authInstructor, updateSectionCtrl);
  *         description: Section deleted
  *       401:
  *         description: No token provided
+ *       404:
+ *         description: Section not found
  *       500:
  *         description: Server error
  */
